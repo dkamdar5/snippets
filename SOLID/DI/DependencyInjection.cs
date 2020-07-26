@@ -40,4 +40,17 @@ namespace DependencyInjection {
             return _employeeDAL.SelectAllEmployees();
         }
     }
+
+    class Program {
+        static void Main(string[] args) {
+            EmployeeBL employeeBL = new EmployeeBL(new EmployeeDAL());
+            List<Employee> employees = employeeBL.GetAllEmployees();
+
+            foreach (Employee emp in employees) {
+                Console.WriteLine("ID: {0}, Name: {1}, Department: {2}",
+                    emp.ID, emp.Name, emp.Department);
+                Console.ReadKey();
+            }
+        }
+    }
 }
