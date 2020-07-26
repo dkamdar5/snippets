@@ -6,7 +6,12 @@ namespace DependencyInjection {
         public string Department { get; set; }
     }
 
-    public class EmployeeDAL
+    public interface IEmployeeDAL
+    {
+        List<Employee> SelectAllEmployees();
+    }
+
+    public class EmployeeDAL : IEmployeeDAL
     {
         public List<Employee> SelectAllEmployees()
         {
@@ -23,12 +28,16 @@ namespace DependencyInjection {
 
     public class EmployeeBL
     {
-        public EmployeeDAL employeeDAL;
+        public IEmployeeDAL _employeeDAL;
+        
+        public EmployeeBL(IEmployeeDAL employeeDAL)
+        {
+            _employeeDAL = employeeDAL;
+        }
 
         public List<Employee> GetAllEmployees()
         {
-            employeeDAL = new EmployeeDAL();
-            return employeeDAL.SelectAllEmployees();
+            return _employeeDAL.SelectAllEmployees();
         }
     }
 }
